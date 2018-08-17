@@ -2,7 +2,6 @@ import os
 
 from flask import jsonify
 import pickle
-import json
 import pandas as pd
 
 from generator import make_city_matrix, make_dataset, delay_times
@@ -45,6 +44,5 @@ def load_data():
     return city_matrix, X, y, delay_times
 
 def package_data(prediction):
-    data = {'prediction': prediction}
-    data = json.dumps(data)
+    data = {'result': prediction, 'status': 'success'}
     return jsonify(data)

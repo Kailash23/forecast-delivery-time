@@ -2,7 +2,7 @@
 import os
 
 # project dependencies
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, jsonify
 
 # project modules
 from utils import load_data, package_data, get_regressor
@@ -10,6 +10,8 @@ from regression import predict
 
 import warnings
 warnings.filterwarnings('ignore')
+
+import googlemaps
 
 city_matrix, X, y, delay_times = load_data()
 regressor = get_regressor(X, y)
@@ -29,28 +31,49 @@ def index_app_script():
 def index_styles():
     return send_from_directory('public/styles', 'main.css')
 
+gmaps1 = googlemaps.Client(key='AIzaSyC4dICfe5c823PPYcjeCefHV7C6uxsntpQ')
+
+def call_dist_matrix_api(shipping_city, delivery_city):
+    response = gmaps1.distance_matrix(shipping_city, delivery_city)
+    print(response)
+    response = response['rows'][0]['elements'][0]
+    if response['status'] == 'NOT_FOUND':
+        print('Unknown Location!')
+        return None
+    dist_kms = response['distance']['value'] / 1000
+    time_hrs = response['duration']['value'] / 3600
+    city_matrix[shipping_city][delivery_city] = [dist_kms, time_hrs]
+    return dist_kms
+
 def calc_shortest_path(city='Pune'):
     min_dist = 10000
     closest_shipping_center = 'Delhi'
+
     for key, cities in city_matrix.items():
-        if float(cities[city][0]) < min_dist:
+        if cities.get(city, -0.234) != -0.234:
+            dist = cities[city][0]
+        else:
+            dist = call_dist_matrix_api(key, city)
+            if dist == None:
+                return None
+        if dist < min_dist:
             min_dist = cities[city][0]
             closest_shipping_center = key
     return closest_shipping_center
 
 @app.route('/get-delivery-estimate/')
 def getDeliveryEstimate():
-    weather = 1
+    weather = 0
     transport_mode = 0
-     #delay_time = 48  #we will store average waiting time of each centers
 
     delivery_city = request.args.get('city')
     shipping_city = calc_shortest_path(delivery_city)
 
+    if shipping_city == None:
+        return jsonify({'result': 'Unknown City', 'status': 'failed'})
+
     delay_time = delay_times[shipping_city]
-
     print('{} -> {}'.format(shipping_city, delivery_city))
-
     dist = city_matrix[shipping_city][delivery_city][0]
 
     X = [weather, transport_mode, delay_time, dist]

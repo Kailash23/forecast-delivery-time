@@ -14,11 +14,16 @@ weather_delay = [0.0, 0.7, 2.0]
 
 transport_mode_idx_to_label = {0: 'truck', 1: 'train', 2: 'flight'}
 transport_mode = [0, 1, 2]
-transport_mode_probs = [10, 7, 3]
+transport_mode_probs = [10, 5, 2]
 transport_mode_delay = [0.0, 0.3, 0.8]
 
 delay_time = [2, 6, 10, 14, 20, 24, 30, 36, 42, 48]
 delay_time_probs = [1, 1, 2, 2, 3, 4, 5, 5, 4, 3]
+
+
+delay_time = [6, 10, 14, 20, 24, 30, 34, 38, 40, 44, 48]
+delay_time_probs = [1, 2, 3, 4, 8, 6, 5, 4, 3, 4, 3]
+
 
 shipping_centres = ['Mumbai', 'Banglore', 'Delhi', 'Kolkata', 'Allahabad']
 delivery_centres = ['Nagpur', 'Jabalpur', 'Pune', 'Lucknow', 'Kanpur', 'Nagpur', 'Indore',
@@ -40,8 +45,7 @@ delivery_centres = ['Nagpur', 'Jabalpur', 'Pune', 'Lucknow', 'Kanpur', 'Nagpur',
     'Ulhasnagar', 'Tezpur', 'Imphal', 'Silchar', 'Shillong'
 ]
 
-delay_times = {'Mumbai': 12, 'Banglore' : 10, 'Hyderabad' : 16, 'Chennai' : 16, 'Ahmedabad' : 15, 
-            'Jaipur': 14, 'Gurgaon': 13, 'Pune': 19, 'Delhi': 15, 'Kolkata': 10, 'Allahabad': 13}
+delay_times = {'Mumbai': 30, 'Banglore' : 26, 'Ahmedabad' : 28, 'Delhi': 29, 'Kolkata': 27, 'Allahabad': 29}
 
 multiset = lambda values, probs: [values[j] for j in range(len(probs)) for i in range(probs[j])]
 
