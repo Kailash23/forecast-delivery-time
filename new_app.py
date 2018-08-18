@@ -91,8 +91,6 @@ def getDeliveryEstimate():
     prediction = '{:.2f}'.format(predict(regressor, [X])[0])
     print('Prediction: {}'.format(prediction))
 
-    if 'storm' in 
-
     return package_data(prediction)
     
 
