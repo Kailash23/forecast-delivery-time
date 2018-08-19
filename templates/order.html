@@ -22,7 +22,7 @@
 
   <div class="container">
     <div class="py-5 text-center">
-      <img class="d-block mx-auto mb-4" src="dell.svg" alt="" width="100" height="100">
+      <img class="d-block mx-auto mb-4" src="assets/dell.svg" alt="" width="100" height="100">
       <h2>Place Order</h2>
       <p class="lead">View each product to see its available warranties and services..</p>
     </div>
@@ -30,23 +30,19 @@
     <div class="col-md-12 order-md-2">
 
       <h4 class="mb-3">Billing address</h4>
-      <form class="needs-validation" novalidate action="/rollover.html">
+      <form class="needs-validation" novalidate action="/rollover" method="POST">
         <div class="row">
-          <div class="col-md-6 mb-3">
-            <label for="firstName">First name</label>
-            <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+          <div class="col-md-12 mb-3">
+            <label for="firstName">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="" value="" required>
             <div class="invalid-feedback">
-              Valid first name is required.
-            </div>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="lastName">Last name</label>
-            <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
-            <div class="invalid-feedback">
-              Valid last name is required.
+              Valid name is required.
             </div>
           </div>
         </div>
+
+        <!-- <p class="d-none" id="template_order_id">{{ order_id }}</p> -->
+        <input type="hidden" id="order_id" name="order_id" value="{{ order_id }}">
 
         <div class="mb-3">
           <label for="email">Email <span class="text-muted">(Optional)</span></label>
@@ -64,17 +60,12 @@
           </div>
         </div>
 
-        <div class="mb-3">
-          <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-          <input type="text" class="form-control" id="address2" placeholder="">
-        </div>
-
         <div class="row">
           <div class="col-md-5 mb-3">
-            <label for="country">Country</label>
-            <input type="text" class="form-control" id="country" placeholder="" required>
+            <label for="city">City</label>
+            <input type="text" name="city" class="form-control" id="city" placeholder="" required>
             <div class="invalid-feedback">
-              Please select a valid country.
+              Please select a valid city.
             </div>
           </div>
           <div class="col-md-4 mb-3">
@@ -113,11 +104,11 @@
   <!-- Bootstrap core JavaScript
     ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
   <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
   <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/holder.min.js"></script>
+  <script src="/scripts/order.js"></script>
   <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {

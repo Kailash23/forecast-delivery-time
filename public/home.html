@@ -12,20 +12,15 @@
   <title>Home</title>
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
   <!-- Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-    crossorigin="anonymous"></script>
-
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
   <!-- Custom styles for this template -->
-  <link rel= "stylesheet" type= "text/css" href= "http://localhost:5000/styles/home.css">
+  <link href="/styles/home.css" rel="stylesheet">
 </head>
 
 <body>
@@ -58,115 +53,29 @@
 
     <div class="album py-5 bg-light">
       <div class="container">
-        <div class="row">
+        <div class="row" id="products-container">
 
-          <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
-              <img class="card-img-top" src="assets/monitor.jpg" alt="Card image cap">
-              <div class="card-body">
-                <p class="card-text">Dell S2216H 21.5-Inch Full HD LED Monitor</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <form class="btn-group" action="/order.html">
-                    <button type="submit" class="btn btn-sm btn-outline-secondary" ">Buy Now</button>
-                  </form>
-                  <small class="text-muted ">Rs 9,599.00</small>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4 ">
-            <div class="card mb-4 shadow-sm ">
-              <img class="card-img-top " src="assets/flip.jpg " alt="Card image cap ">
-              <div class="card-body ">
-                <p class="card-text ">2018 Dell Inspiron 15 7000 15.6" FHD IPS Laptop Computer</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <form class="btn-group" action="/order.html">
-                      <button type="submit" class="btn btn-sm btn-outline-secondary" ">Buy Now</button>
-                    </form>
-                  <small class="text-muted ">Rs 1,26,999</small>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4 ">
-            <div class="card mb-4 shadow-sm ">
-              <img class="card-img-top " src="assets/laptop.jpg " alt="Card image cap ">
-              <div class="card-body ">
-                <p class="card-text ">Dell Inspiron 15 Gaming 7567 15.6-inch Laptop</p>
-                 <div class="d-flex justify-content-between align-items-center ">
-                    <form class="btn-group " action="/order.html ">
-                      <button type="submit " class="btn btn-sm btn-outline-secondary " ">Buy Now</button>
-                    </form>
-                    <small class="text-muted">Rs 89,000</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="card mb-4 shadow-sm">
-                <img class="card-img-top" src="assets/keyboard.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <p class="card-text">Dell KB216 Wired Multimedia USB Keyboard</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <form class="btn-group" action="/order.html">
-                      <button type="submit" class="btn btn-sm btn-outline-secondary" ">Buy Now</button>
-                    </form>
-                  <small class="text-muted ">Rs 1,599</small>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4 ">
-            <div class="card mb-4 shadow-sm ">
-              <img class="card-img-top " src="assets/mouse.jpg " alt="Card image cap ">
-              <div class="card-body ">
-                <p class="card-text ">Dell Ms116 275-BBCB Optical Mouse</p>
-                <div class="d-flex justify-content-between align-items-center ">
-                    <form class="btn-group " action="/order.html ">
-                      <button type="submit " class="btn btn-sm btn-outline-secondary " ">Buy Now</button>
-                    </form>
-                    <small class="text-muted">Rs 450</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="card mb-4 shadow-sm">
-                <img class="card-img-top" src="assets/cpu.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <p class="card-text">DELL Vostro 3470-2018 SFF Desktop-Core i3 8th Gen, 4 GB DDR4</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <form class="btn-group" action="/order.html">
-                      <button type="submit" class="btn btn-sm btn-outline-secondary" ">Buy Now</button>
-                    </form>
-                  <small class="text-muted ">Rs 33,500</small>
-                </div>
-              </div>
-            </div>
-          </div>
-    </main>
+        </div>
+      </div>
+    </div>
+  </main>
           
-            <footer class="text-muted ">
-              <div class="container ">
-                <p class="float-right ">
-                  <a class ="btn btn-outline-primary " href="# ">Back to top</a>
-                </p>
-              </div>
-            </footer>
-          
-              <!-- Bootstrap core JavaScript
-              ================================================== -->
-              <!-- Placed at the end of the document so the pages load faster -->
-              <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js " integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo
-                        " crossorigin="anonymous "></script>
-              <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js "></script>
-              <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js "></script>
-              <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/holder.min.js "></script>  
-   
+  <footer class="text-muted ">
+    <div class="container ">
+      <p class="float-right ">
+        <a class ="btn btn-outline-primary " href="# ">Back to top</a>
+      </p>
+    </div>
+  </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js " integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous "></script>
+    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js "></script>
+    <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js "></script>
+	<script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/holder.min.js "></script> 
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="/scripts/home.js"></script>
   </body>
 </html>

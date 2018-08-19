@@ -2,7 +2,7 @@
 import os
 
 # project dependencies
-from flask import Flask, request, send_from_directory, jsonify
+from flask import Flask, request, send_from_directory, jsonify, redirect, session, render_template
 from pprint import pprint
 import googlemaps
 import pymongo
@@ -20,6 +20,8 @@ city_matrix, X, y, delay_times = load_data()
 regressor = get_regressor(X, y)
 
 app = Flask(__name__)
+app.secret_key = 'kailash_uniyal_04'
+
 
 #DEFAULT
 @app.route('/')
@@ -39,10 +41,6 @@ def index3():
 def index4():
     return send_from_directory('public','home.html')
 
-@app.route('/order.html')
-def index5():
-    return send_from_directory('public','order.html')
-
 @app.route('/rollover.html')
 def index6():
     return send_from_directory('public','rollover.html')
@@ -55,6 +53,14 @@ def index_app_script():
 @app.route('/scripts/rollover.js')
 def index_app_script1():
     return send_from_directory('public/scripts', 'rollover.js')
+
+@app.route('/scripts/home.js')
+def index_app_script2():
+    return send_from_directory('public/scripts', 'home.js')
+
+@app.route('/scripts/order.js')
+def index_app_script3():
+    return send_from_directory('public/scripts', 'order.js')
 
 #CSS ROUTES
 @app.route('/styles/form.css')
@@ -119,7 +125,6 @@ gmaps1 = googlemaps.Client(key='AIzaSyC4dICfe5c823PPYcjeCefHV7C6uxsntpQ')
 
 def call_dist_matrix_api(shipping_city, delivery_city):
     response = gmaps1.distance_matrix(shipping_city, delivery_city)
-    print(response)
     response = response['rows'][0]['elements'][0]
     if response['status'] == 'NOT_FOUND':
         print('Unknown Location!')
@@ -145,12 +150,57 @@ def calc_shortest_path(city='Pune'):
             closest_shipping_center = key
     return closest_shipping_center
 
-@app.route('/get-delivery-estimate/')
-def getDeliveryEstimate():
+@app.route('/get-products')
+def products():
+    products_collection = db.products
+    products = []
+    for product in products_collection.find():
+        products.append({'id': product['id'], 'name': product['name'], 'price': product['price'], 'thumb': product['thumb']})
+    print(products)
+    return jsonify(products)
+
+@app.route('/get-orders')
+def orders():
+    products_collection = db.products
+    products = []
+    for product in products_collection.find():
+        products.append({'id': product['id'], 'name': product['name'], 'price': product['price'], 'thumb': product['thumb']})
+    orders_collection = db.orders
+    orders = []
+    for order in orders_collection.find():
+        orders.append({"delivery_estimate": order['delivery_estimate'], "product_id": order['product_id'], "city": order['city']})
+
+    results = []
+    for order in orders:
+        for product in products:
+            if order['product_id'] == product['id']:
+                results.append({'address': order['city'], 'delivery_estimate': order['delivery_estimate'], 'name': product['name']})
+
+    return jsonify(results)
+
+@app.route('/rollover', methods=['POST', 'GET'])
+def rollover():
+    if request.method == 'POST':
+        result = request.form
+        
+        city = result['city']
+        product_id = result['order_id']
+
+        orders_collection = db.orders
+        orders_collection.insert_one({"order_id": "14234234123", "delivery_estimate": getDeliveryEstimate(city), "product_id": product_id, "city": city})
+        return redirect("rollover.html")
+
+@app.route('/place-order', methods=['POST', 'GET'])
+def index5():
+    if request.method == 'POST':
+        result = request.form
+        order_id = result['order_id']
+        return render_template('order.html', order_id=order_id)
+
+def getDeliveryEstimate(delivery_city):
     weather = 0
     transport_mode = 0
 
-    delivery_city = request.args.get('city')
     shipping_city = calc_shortest_path(delivery_city)
 
     if shipping_city == None:
@@ -165,7 +215,7 @@ def getDeliveryEstimate():
     prediction = '{:.2f}'.format(predict(regressor, [X])[0])
     print('Prediction: {}'.format(prediction))
 
-    return package_data(prediction, db.users.find_one({'email': 'test@gmail.com'}))
+    return prediction
     
 
 if __name__ == '__main__':
@@ -174,20 +224,21 @@ if __name__ == '__main__':
     # DATABASE CONNECTION
     global db
     db = client['dell-project-mongo-db']
-    # # TABLE/COLLECTION CURSOR
-    # users_collection = db.users
-    
-    # # OBJECT INSERTION - returns Inserted Object's ID
-    # object_id = users_collection.insert_one({"email": "test@gmail.com", "password": "testpwd"}).inserted_id
-    
-    # # QUERY/FIND A DOCUMENT IN COLLECTION USING ID
-    # test_user = users_collection.find_one({"_id": object_id})
-    # pprint(test_user)
-    # pskrunner14 = users_collection.find_one({"email": "pskrunner14@gmail.com"})
-    # pprint(pskrunner14)
-
-    # # RETRIEVE ALL DOCUMENTS
-    # for user in users_collection.find():
-    #     pprint(user)
 
     app.run(debug=True)
+
+# # TABLE/COLLECTION CURSOR
+# users_collection = db.users
+
+# # OBJECT INSERTION - returns Inserted Object's ID
+# object_id = users_collection.insert_one({"email": "test@gmail.com", "password": "testpwd"}).inserted_id
+
+# # QUERY/FIND A DOCUMENT IN COLLECTION USING ID
+# test_user = users_collection.find_one({"_id": object_id})
+# pprint(test_user)
+# pskrunner14 = users_collection.find_one({"email": "pskrunner14@gmail.com"})
+# pprint(pskrunner14)
+
+# # RETRIEVE ALL DOCUMENTS
+# for user in users_collection.find():
+#     pprint(user)
