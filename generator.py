@@ -87,7 +87,7 @@ def make_dataset(num_examples, city_matrix):
     X = []
     y = []
     
-    for i in tqdm(range(num_examples), total=num_examples, desc='Examples'):
+    for i in tqdm(range(num_examples), total=num_examples,leave=False, desc='Examples'):
         try:
             weather_val = random.choice(weather_ditro)
             transport_mode_val = random.choice(transport_mode_distro)

@@ -43,6 +43,7 @@ def load_data():
 
     return city_matrix, X, y, delay_times
 
-def package_data(prediction):
-    data = {'result': prediction, 'status': 'success'}
+def package_data(prediction, user):
+    print(user)
+    data = {'result': prediction, 'user': user['email'], 'status': 'success'}
     return jsonify(data)

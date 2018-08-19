@@ -4,3 +4,4 @@ scikit-learn
 tqdm
 googlemaps
 scipy
+pymongo

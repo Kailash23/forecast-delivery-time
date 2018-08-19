@@ -3,6 +3,10 @@ import os
 
 # project dependencies
 from flask import Flask, request, send_from_directory, jsonify
+from pprint import pprint
+import googlemaps
+import pymongo
+from pymongo import MongoClient
 
 # project modules
 from utils import load_data, package_data, get_regressor
@@ -11,7 +15,6 @@ from regression import predict
 import warnings
 warnings.filterwarnings('ignore')
 
-import googlemaps
 
 city_matrix, X, y, delay_times = load_data()
 regressor = get_regressor(X, y)
@@ -57,7 +60,7 @@ def calc_shortest_path(city='Pune'):
             if dist == None:
                 return None
         if dist < min_dist:
-            min_dist = cities[city][0]
+            min_dist = dist
             closest_shipping_center = key
     return closest_shipping_center
 
@@ -81,8 +84,25 @@ def getDeliveryEstimate():
     prediction = '{:.2f}'.format(predict(regressor, [X])[0])
     print('Prediction: {}'.format(prediction))
 
-    return package_data(prediction)
+    return package_data(prediction, db.users.find_one({'email': 'test@gmail.com'}))
     
 
 if __name__ == '__main__':
+    # MONGO CONNECTION
+    client = MongoClient('mongodb://kailash23:kailash23@ds125482.mlab.com:25482/dell-project-mongo-db')
+    # DATABASE CONNECTION
+    global db
+    db = client['dell-project-mongo-db']
+    # # TABLE/COLLECTION CURSOR
+    # users_collection = db.users
+    # # OBJECT INSERTION - returns Inserted Object's ID
+    # object_id = users_collection.insert_one({"email": "test@gmail.com", "password": "testpwd"}).inserted_id
+    # # QUERY/FIND A DOCUMENT IN COLLECTION USING ID
+    # test_user = users_collection.find_one({"_id": object_id})
+    # pprint(test_user)
+    # pskrunner14 = users_collection.find_one({"email": "pskrunner14@gmail.com"})
+    # pprint(pskrunner14)
+    # # RETRIEVE ALL DOCUMENTS
+    # for user in users_collection.find():
+    #     pprint(user)
     app.run(debug=True)
