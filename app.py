@@ -21,18 +21,99 @@ regressor = get_regressor(X, y)
 
 app = Flask(__name__)
 
+#DEFAULT
 @app.route('/')
 def index():
     return send_from_directory('public','index.html')
+
+#HTML ROUTES
 @app.route('/index.html')
 def index2():
     return send_from_directory('public','index.html')
+
+@app.route('/login.html')
+def index3():
+    return send_from_directory('public','login.html')
+
+@app.route('/home.html')
+def index4():
+    return send_from_directory('public','home.html')
+
+@app.route('/order.html')
+def index5():
+    return send_from_directory('public','order.html')
+
+@app.route('/rollover.html')
+def index6():
+    return send_from_directory('public','rollover.html')
+
+#JS ROUTES
 @app.route('/scripts/app.js')
 def index_app_script():
     return send_from_directory('public/scripts', 'app.js')
-@app.route('/styles/main.css')
+
+@app.route('/scripts/rollover.js')
+def index_app_script1():
+    return send_from_directory('public/scripts', 'rollover.js')
+
+#CSS ROUTES
+@app.route('/styles/form.css')
 def index_styles():
-    return send_from_directory('public/styles', 'main.css')
+    return send_from_directory('public/styles', 'form.css')
+
+@app.route('/styles/home.css')
+def index_styles1():
+    return send_from_directory('public/styles', 'home.css')
+
+@app.route('/styles/rollover.css')
+def index_styles2():
+    return send_from_directory('public/styles', 'rollover.css')
+
+@app.route('/styles/signin.css')
+def index_styles3():
+    return send_from_directory('public/styles', 'signin.css')
+
+# ASSETS
+@app.route('/assets/cpu.jpg')
+def index_assets():
+    return send_from_directory('public/assets', 'cpu.jpg')
+
+@app.route('/assets/flip.jpg')
+def index_assets1():
+    return send_from_directory('public/assets', 'flip.jpg')
+
+@app.route('/assets/keyboard.jpg')
+def index_assets2():
+    return send_from_directory('public/assets', 'keyboard.jpg')
+
+@app.route('/assets/laptop.jpg')
+def index_assets3():
+    return send_from_directory('public/assets', 'laptop.jpg')
+
+@app.route('/assets/monitor.jpg')
+def index_assets4():
+    return send_from_directory('public/assets', 'monitor.jpg')
+
+@app.route('/assets/mouse.jpg')
+def index_assets5():
+    return send_from_directory('public/assets', 'mouse.jpg')
+
+#SVG
+@app.route('/assets/delivery.svg')
+def index_assets6():
+    return send_from_directory('public/assets', 'delivery.svg')
+
+@app.route('/assets/dell.svg')
+def index_assets7():
+    return send_from_directory('public/assets', 'dell.svg')
+
+@app.route('/assets/truck.svg')
+def index_assets8():
+    return send_from_directory('public/assets', 'truck.svg')
+
+@app.route('/assets/whitedell.svg')
+def index_assets9():
+    return send_from_directory('public/assets', 'whitedell.svg')
 
 gmaps1 = googlemaps.Client(key='AIzaSyC4dICfe5c823PPYcjeCefHV7C6uxsntpQ')
 
@@ -95,14 +176,18 @@ if __name__ == '__main__':
     db = client['dell-project-mongo-db']
     # # TABLE/COLLECTION CURSOR
     # users_collection = db.users
+    
     # # OBJECT INSERTION - returns Inserted Object's ID
     # object_id = users_collection.insert_one({"email": "test@gmail.com", "password": "testpwd"}).inserted_id
+    
     # # QUERY/FIND A DOCUMENT IN COLLECTION USING ID
     # test_user = users_collection.find_one({"_id": object_id})
     # pprint(test_user)
     # pskrunner14 = users_collection.find_one({"email": "pskrunner14@gmail.com"})
     # pprint(pskrunner14)
+
     # # RETRIEVE ALL DOCUMENTS
     # for user in users_collection.find():
     #     pprint(user)
+
     app.run(debug=True)
