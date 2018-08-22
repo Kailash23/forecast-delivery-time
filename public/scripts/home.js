@@ -47,4 +47,3 @@ $(document).ready(function(){
     req.send(null);
 
 });
-

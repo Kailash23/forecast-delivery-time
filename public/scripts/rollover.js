@@ -1,7 +1,3 @@
-$( "#tile1" ).mouseover(function() {
-  $( "#log" ).append( "<div>Handler for .mouseover() called.</div>" );
-});
-
 function get_template(delivery_estimate, product_name, address) { 
   return `<div class="jugger container estimates">
             <div class="my-3 p-3 bg-white rounded shadow-sm">

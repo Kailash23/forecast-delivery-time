@@ -16,12 +16,11 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-city_matrix, X, y, delay_times = load_data()
+city_matrix, X, y, delay_time_dictionary = load_data()
 regressor = get_regressor(X, y)
 
 app = Flask(__name__)
 app.secret_key = 'kailash_uniyal_04'
-
 
 #DEFAULT
 @app.route('/')
@@ -123,15 +122,18 @@ def index_assets9():
 
 gmaps1 = googlemaps.Client(key='AIzaSyC4dICfe5c823PPYcjeCefHV7C6uxsntpQ')
 
+# FUNCTION CALCULATING SHORTEST DISTANCE FROM SHIPPING CENTER TO DELIVERY CENTER
 def call_dist_matrix_api(shipping_city, delivery_city):
     response = gmaps1.distance_matrix(shipping_city, delivery_city)
     response = response['rows'][0]['elements'][0]
+
     if response['status'] == 'NOT_FOUND':
         print('Unknown Location!')
         return None
+
     dist_kms = response['distance']['value'] / 1000
     time_hrs = response['duration']['value'] / 3600
-    city_matrix[shipping_city][delivery_city] = [dist_kms, time_hrs]
+    city_matrix[shipping_city][delivery_city] = [dist_kms, time_hrs]    # if city - not found in matrix then save it
     return dist_kms
 
 def calc_shortest_path(city='Pune'):
@@ -139,7 +141,7 @@ def calc_shortest_path(city='Pune'):
     closest_shipping_center = 'Delhi'
 
     for key, cities in city_matrix.items():
-        if cities.get(city, -0.234) != -0.234:
+        if cities.get(city, -0.234) != -0.234:       # if city is not stored in the matrix call Distance Matrix Api
             dist = cities[city][0]
         else:
             dist = call_dist_matrix_api(key, city)
@@ -156,7 +158,7 @@ def products():
     products = []
     for product in products_collection.find():
         products.append({'id': product['id'], 'name': product['name'], 'price': product['price'], 'thumb': product['thumb']})
-    print(products)
+    #print(products)
     return jsonify(products)
 
 @app.route('/get-orders')
@@ -165,6 +167,7 @@ def orders():
     products = []
     for product in products_collection.find():
         products.append({'id': product['id'], 'name': product['name'], 'price': product['price'], 'thumb': product['thumb']})
+   
     orders_collection = db.orders
     orders = []
     for order in orders_collection.find():
@@ -177,6 +180,7 @@ def orders():
                 results.append({'address': order['city'], 'delivery_estimate': order['delivery_estimate'], 'name': product['name']})
 
     return jsonify(results)
+
 
 @app.route('/rollover', methods=['POST', 'GET'])
 def rollover():
@@ -198,22 +202,23 @@ def index5():
         return render_template('order.html', order_id=order_id)
 
 def getDeliveryEstimate(delivery_city):
-    weather = 0
-    transport_mode = 0
+    weather = 0     # Weather (default)
+    transport_mode = 0      # transport  (default)
+    product_category_number = 2     # product category   (default)
+    product_delay_time = delay_time_dictionary[product_category_number]         # delay time (default)
 
-    shipping_city = calc_shortest_path(delivery_city)
+    shipping_city = calc_shortest_path(delivery_city)       # shortest city  
 
     if shipping_city == None:
         return jsonify({'result': 'Unknown City', 'status': 'failed'})
 
-    delay_time = delay_times[shipping_city]
     print('{} -> {}'.format(shipping_city, delivery_city))
     dist = city_matrix[shipping_city][delivery_city][0]
 
-    X = [weather, transport_mode, delay_time, dist]
+    X = [product_category_number, weather, transport_mode, product_delay_time, dist]
 
     prediction = '{:.2f}'.format(predict(regressor, [X])[0])
-    print('Prediction: {}'.format(prediction))
+    # print('Prediction: {}'.format(prediction))
 
     return prediction
     
@@ -227,18 +232,28 @@ if __name__ == '__main__':
 
     app.run(debug=True)
 
+
+
+
+#*************** Mongo DB Basics ***************************************************************************
+
 # # TABLE/COLLECTION CURSOR
 # users_collection = db.users
+
 
 # # OBJECT INSERTION - returns Inserted Object's ID
 # object_id = users_collection.insert_one({"email": "test@gmail.com", "password": "testpwd"}).inserted_id
 
+
 # # QUERY/FIND A DOCUMENT IN COLLECTION USING ID
 # test_user = users_collection.find_one({"_id": object_id})
 # pprint(test_user)
-# pskrunner14 = users_collection.find_one({"email": "pskrunner14@gmail.com"})
-# pprint(pskrunner14)
+# kailash23 = users_collection.find_one({"email": "kailash23@gmail.com"})
+# pprint(kailash23)
+
 
 # # RETRIEVE ALL DOCUMENTS
 # for user in users_collection.find():
 #     pprint(user)
+
+#**********************************************************************************************************

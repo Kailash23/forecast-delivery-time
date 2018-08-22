@@ -3,8 +3,9 @@ import os
 from flask import jsonify
 import pickle
 import pandas as pd
+import math
 
-from generator import make_city_matrix, make_dataset, delay_times
+from generator import make_city_matrix, make_dataset, delay_time_dictionary
 from regression import train
 
 import warnings
@@ -41,9 +42,8 @@ def load_data():
         with open('data/dataset.pkl', 'wb') as file:
             pickle.dump((X, y), file)
 
-    return city_matrix, X, y, delay_times
+    return city_matrix, X, y, delay_time_dictionary
 
-def package_data(prediction, user):
-    print(user)
-    data = {'result': prediction, 'user': user['email'], 'status': 'success'}
+def package_data(prediction):
+    data = {'result': prediction, 'status': 'success' }
     return jsonify(data)

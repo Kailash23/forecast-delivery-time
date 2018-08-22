@@ -17,14 +17,13 @@ transport_mode = [0, 1, 2]
 transport_mode_probs = [10, 5, 2]
 transport_mode_delay = [0.0, 0.3, 0.8]
 
-# delay_time = [2, 6, 10, 14, 20, 24, 30, 36, 42, 48]
-# delay_time_probs = [1, 1, 2, 2, 3, 4, 5, 5, 4, 3]
+category_idx_to_label = {'low_range': 0, 'medium_range': 1, 'high_range': 2}
+category = [0, 1, 2]
 
-delay_time = [6, 10, 14, 20, 24, 30, 34, 38, 40, 44, 48]
-delay_time_probs = [1, 2, 3, 4, 8, 6, 5, 4, 3, 4, 3]
+delay_time_dictionary_label = {'low_range': 6, 'medium_range': 10, 'high_range': 24}
+delay_time_dictionary = {0:6, 1:10, 2:24}
 
-
-shipping_centres = ['Mumbai', 'Banglore', 'Delhi', 'Kolkata', 'Allahabad']
+shipping_centres = ['Banglore', 'Delhi', 'Kolkata']
 
 delivery_centres = ['Nagpur', 'Jabalpur', 'Pune', 'Lucknow', 'Kanpur', 'Nagpur', 'Indore',
     'Thane', 'Bhopal', 'Visakhapatnam', 'Patna', 'Vadodara', 'Ghaziabad', 'Ludhiana',
@@ -45,16 +44,14 @@ delivery_centres = ['Nagpur', 'Jabalpur', 'Pune', 'Lucknow', 'Kanpur', 'Nagpur',
     'Ulhasnagar', 'Tezpur', 'Imphal', 'Silchar', 'Shillong'
 ]
 
-delay_times = {'Mumbai': 30, 'Banglore' : 26,'Delhi': 29, 'Kolkata': 27, 'Allahabad': 29}
 
 multiset = lambda values, probs: [values[j] for j in range(len(probs)) for i in range(probs[j])]
 
 weather_ditro = multiset(weather, weather_probs)
 transport_mode_distro = multiset(transport_mode, transport_mode_probs)
-delay_time_distro = multiset(delay_time, delay_time_probs)
+
 random.shuffle(weather_ditro)
 random.shuffle(transport_mode_distro)
-random.shuffle(delay_time_distro)
 
 def make_city_matrix():
     city_matrix = {}
@@ -89,9 +86,12 @@ def make_dataset(num_examples, city_matrix):
     
     for i in tqdm(range(num_examples), total=num_examples,leave=False, desc='Examples'):
         try:
+
+            item_category = random.choice(category)
+            item_delay_category = delay_time_dictionary[item_category]
+
             weather_val = random.choice(weather_ditro)
             transport_mode_val = random.choice(transport_mode_distro)
-            delay_time_val = random.choice(delay_time_distro)
 
             shipping_centre = random.choice(shipping_centres)
             delivery_centre = random.choice(delivery_centres)
@@ -100,9 +100,9 @@ def make_dataset(num_examples, city_matrix):
 
             time_hrs -= time_hrs * transport_mode_delay[transport_mode_val]
             time_hrs += time_hrs * weather_delay[weather_val]
-            time_hrs += delay_time_val
+            time_hrs += item_delay_category
 
-            X.append([weather_val, transport_mode_val, delay_time_val, dist_kms])
+            X.append([item_category, weather_val, transport_mode_val, item_delay_category, dist_kms])
             y.append(time_hrs)
         except Exception as e:
             print(str(e))
