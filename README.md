@@ -1,5 +1,5 @@
 # forecast-delivery-time
-# Overview ![Under Development](./public/images/under-development-orange.svg)
+# Overview 
 
 Forecast delivery time of the product.
 Model - Scalable  &  Generalize 
