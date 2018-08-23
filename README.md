@@ -19,7 +19,7 @@ Scikit Learn were used to develop various regression models to predict delivery 
 
 ## Data
 
-Dataset is generated 
+A custom dataset is generated.
 
 ## Getting Started
 
