@@ -3,6 +3,7 @@
 
 Forecast delivery time of the product.
 Model - Scalable  &  Generalize 
+
  * Domain - Within India
  * We can increase the number of warehouses anytime
  * Works well with new data
