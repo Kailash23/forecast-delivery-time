@@ -236,9 +236,6 @@ if __name__ == '__main__':
     else:
         app.run(debug=True)
 
-
-
-
 #*************** Mongo DB Basics ***************************************************************************
 
 # # TABLE/COLLECTION CURSOR
