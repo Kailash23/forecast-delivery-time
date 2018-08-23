@@ -232,9 +232,9 @@ if __name__ == '__main__':
 
     if os.getenv('ENV', 'dev') == 'prod':
         port = int(os.environ.get('PORT', 5000))
-        app.run(host='0.0.0.0', port=port, debug=True)
+        app.run(host='localhost', port=port, debug=True)
     else:
-        app.run(debug=True)
+        app.run(host='localhost', debug=True)
 
 #*************** Mongo DB Basics ***************************************************************************
 
