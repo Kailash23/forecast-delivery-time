@@ -8,7 +8,7 @@ Model - Scalable  &  Generalize.
  * We can increase the number of warehouses anytime
  * Works well with new data
 
-Scikit Learn were used to develop various regression models to predict delivery time.
+Scikit Learn was used to develop various regression models to predict delivery time.
 
 ## Algorithms Analysed
 
