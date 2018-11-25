@@ -1,5 +1,3 @@
-# TODO (1) FIX ALGO PULL REQUEST
-
 # standard py libs
 import os
 
@@ -30,97 +28,24 @@ def index():
     return send_from_directory('public','index.html')
 
 #HTML ROUTES
-@app.route('/index.html')
-def index2():
-    return send_from_directory('public','index.html')
-
-@app.route('/login.html')
-def index3():
-    return send_from_directory('public','login.html')
-
-@app.route('/home.html')
-def index4():
-    return send_from_directory('public','home.html')
-
-@app.route('/rollover.html')
-def index6():
-    return send_from_directory('public','rollover.html')
+@app.route('/<path:path>')
+def index2(path):
+    return send_from_directory('public', path)
 
 #JS ROUTES
-@app.route('/scripts/app.js')
-def index_app_script():
-    return send_from_directory('public/scripts', 'app.js')
-
-@app.route('/scripts/rollover.js')
-def index_app_script1():
-    return send_from_directory('public/scripts', 'rollover.js')
-
-@app.route('/scripts/home.js')
-def index_app_script2():
-    return send_from_directory('public/scripts', 'home.js')
-
-@app.route('/scripts/order.js')
-def index_app_script3():
-    return send_from_directory('public/scripts', 'order.js')
+@app.route('/scripts/<path:path>')
+def index_app_script(path):
+    return send_from_directory('public/scripts', path)
 
 #CSS ROUTES
-@app.route('/styles/form.css')
-def index_styles():
-    return send_from_directory('public/styles', 'form.css')
-
-@app.route('/styles/home.css')
-def index_styles1():
-    return send_from_directory('public/styles', 'home.css')
-
-@app.route('/styles/rollover.css')
-def index_styles2():
-    return send_from_directory('public/styles', 'rollover.css')
-
-@app.route('/styles/signin.css')
-def index_styles3():
-    return send_from_directory('public/styles', 'signin.css')
+@app.route('/styles/<path:path>')
+def index_styles(path):
+    return send_from_directory('public/styles', path)
 
 # ASSETS
-@app.route('/assets/cpu.jpg')
-def index_assets():
-    return send_from_directory('public/assets', 'cpu.jpg')
-
-@app.route('/assets/flip.jpg')
-def index_assets1():
-    return send_from_directory('public/assets', 'flip.jpg')
-
-@app.route('/assets/keyboard.jpg')
-def index_assets2():
-    return send_from_directory('public/assets', 'keyboard.jpg')
-
-@app.route('/assets/laptop.jpg')
-def index_assets3():
-    return send_from_directory('public/assets', 'laptop.jpg')
-
-@app.route('/assets/monitor.jpg')
-def index_assets4():
-    return send_from_directory('public/assets', 'monitor.jpg')
-
-@app.route('/assets/mouse.jpg')
-def index_assets5():
-    return send_from_directory('public/assets', 'mouse.jpg')
-
-#SVG
-@app.route('/assets/delivery.svg')
-def index_assets6():
-    return send_from_directory('public/assets', 'delivery.svg')
-
-@app.route('/assets/dell.svg')
-def index_assets7():
-    return send_from_directory('public/assets', 'dell.svg')
-
-@app.route('/assets/truck.svg')
-def index_assets8():
-    return send_from_directory('public/assets', 'truck.svg')
-
-@app.route('/assets/whitedell.svg')
-def index_assets9():
-    return send_from_directory('public/assets', 'whitedell.svg')
+@app.route('/assets/<path:path>')
+def index_assets(path):
+    return send_from_directory('public/assets', path)
 
 gmaps1 = googlemaps.Client(key='AIzaSyC4dICfe5c823PPYcjeCefHV7C6uxsntpQ')
 
@@ -204,9 +129,9 @@ def index5():
         return render_template('order.html', order_id=order_id)
 
 def getDeliveryEstimate(delivery_city):
-    weather = 0     # Weather (default)
-    transport_mode = 0      # transport  (default)
-    product_category_number = 2     # product category   (default)
+    weather = 1     # Weather (default)
+    transport_mode = 1      # transport  (default)
+    product_category_number = 1     # product category   (default)
     product_delay_time = delay_time_dictionary[product_category_number]         # delay time (default)
 
     shipping_city = calc_shortest_path(delivery_city)       # shortest city  
@@ -227,10 +152,10 @@ def getDeliveryEstimate(delivery_city):
 
 if __name__ == '__main__':
     # MONGO CONNECTION
-    client = MongoClient('mongodb://kailash23:kailash23@ds125482.mlab.com:25482/dell-project-mongo-db')
+    client = MongoClient('mongodb://kailash:kailash23@ds135029.mlab.com:35029/delivery-system-db')
     # DATABASE CONNECTION
     global db
-    db = client['dell-project-mongo-db']
+    db = client['delivery-system-db']
 
     if os.getenv('ENV', 'dev') == 'prod':
         port = int(os.environ.get('PORT', 5000))
